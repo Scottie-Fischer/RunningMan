@@ -32,6 +32,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/button_bg_round"
+        android:onClick='onClickStart'
         android:padding="15dp"
         android:text="@string/start"
         android:textColor="#005e63"
