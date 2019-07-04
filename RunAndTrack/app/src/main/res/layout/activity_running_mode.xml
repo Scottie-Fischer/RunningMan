@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context=".RunningMode" >
+
+    <TextView android:id="@+id/time_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="92sp" />
+
+    <Button
+        android:id="@+id/Start_Pause_button"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_below="@+id/time_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_bg_round"
+        android:padding="15dp"
+        android:text="@string/start"
+        android:textColor="#005e63"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/End_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="400dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_bg_round"
+        android:onClick="onClickEnd"
+        android:padding="15dp"
+        android:text="@string/end"
+        android:textColor="#005e63"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/Cancel_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_bg_round"
+        android:onClick="onClickCancel"
+        android:padding="15dp"
+        android:text="@string/cancel"
+        android:textColor="#005e63"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/total_distance_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/time_view"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="41dp"
+        android:text="Total Distance:"
+        android:textColor="#005e63"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/average_speed_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/time_view"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="83dp"
+        android:text="Average Speed:"
+        android:textColor="#005e63"
+        android:textSize="20dp" />
+
+
+</RelativeLayout>

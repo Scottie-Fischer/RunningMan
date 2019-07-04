@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">RunAndTrack</string>
+    <string name="run">RUN</string>
+    <string name="start">START</string>
+    <string name="profile">PROFILE</string>
+    <string name="history">HISTORY</string>
+    <string name="cancel">Cancel</string>
+    <string name="end">End</string>
+    <string name="pause">PAUSE</string>
+</resources>

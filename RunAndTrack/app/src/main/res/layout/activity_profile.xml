@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Profile">
+
+    <TextView
+        android:id="@+id/ProfileTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal"
+        android:text="Account Profile"
+        android:textColor="#005e63"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.079" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/ProfileTextName"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:padding="4dp"
+            android:text="Name:"
+            android:textColor="#000000"
+            android:textSize="22dp" />
+
+        <EditText
+            android:id="@+id/profileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="text" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/ProfileTextAge"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:padding="4dp"
+            android:text="Age:"
+            android:textColor="#000000"
+            android:textSize="22dp" />
+
+        <EditText
+            android:id="@+id/profileAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Age"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/ProfileTextSex"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:padding="4dp"
+            android:text="Sex:"
+            android:textColor="#000000"
+            android:textSize="22dp" />
+
+        <EditText
+            android:id="@+id/profileSex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Sex"
+            android:inputType="text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dip"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/ProfileTextWeight"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:padding="4dp"
+            android:text="Weight(kg):"
+            android:textColor="#000000"
+            android:textSize="22dp" />
+
+        <EditText
+            android:id="@+id/profileWeight"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Weight(kg)"
+            android:inputType="numberDecimal" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/ProfileHomeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Homepage" />
+
+</android.widget.LinearLayout>
