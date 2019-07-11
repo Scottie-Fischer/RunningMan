@@ -47,8 +47,10 @@
                 style="@style/Widget.AppCompat.Button.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
-                android:layout_weight="1"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="0.5"
                 android:background="#AAC8FF"
+                android:onClick="onImageGalleryClicked"
                 android:text="Edit Profile Picture" />
 
             <Space
@@ -154,12 +156,11 @@
             android:hint="Weight(kg)"
             android:inputType="numberDecimal" />
 
-    </LinearLayout>
 
+    </LinearLayout>
     <Button
         android:id="@+id/ProfileHomeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Homepage" />
-
 </android.widget.LinearLayout>

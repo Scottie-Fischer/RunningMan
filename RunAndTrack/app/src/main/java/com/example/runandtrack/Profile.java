@@ -3,7 +3,9 @@ package com.example.runandtrack;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,35 +22,38 @@ import android.provider.MediaStore;
 import android.content.Intent;
 import android.widget.Toast;
 
-public class Profile extends AppCompatActivity {
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
-    //===================Story 2===============================//
-    private static int IMG_RESULT = 1001;
-    String ImageDecode;
-    ImageView imageViewLoad;
-    Button LoadImage;
-    Intent intent;
-    String[] FILE;
-    //=========================================================//
+public class Profile extends AppCompatActivity {
+    public static final int Image_Gallery_Request = 20;
+    private ImageView Profile_Picture;
+
+    //This method will be invoked when the user clicks the edit button
+    public void onImageGalleryClicked(View v){
+        //invoke the image gallery using an implicit intent
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+
+        //decides where to store pictures
+        File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        String pictureDirectoryPath = pictureDirectory.getPath();
+
+        //gets URI representation
+        Uri data = Uri.parse(pictureDirectoryPath);
+
+        //sets the data and type of media to look for
+        photoPickerIntent.setDataAndType(data,"image/*");
+        startActivityForResult(photoPickerIntent, Image_Gallery_Request);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        //===================Story 2===============================//
-        imageViewLoad = (ImageView) findViewById(R.id.Profile_Picture);
-        LoadImage = (Button)findViewById(R.id.Edit_Profile_Picture_Button);
+        Profile_Picture = (ImageView) findViewById(R.id.Profile_Picture);
 
-        LoadImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, IMG_RESULT);
-            }
-        });
-
-        //=========================================================//
         Button ProfileHomeButton = (Button)findViewById(R.id.ProfileHomeButton);
         ProfileHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,24 +63,26 @@ public class Profile extends AppCompatActivity {
             }
         });
     }
+
+    //On Activity for Profile Picture Button
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        try{
-            if(requestCode == IMG_RESULT && resultCode == RESULT_OK && null != data) {
-                Uri URI = data.getData();
-                String[] FILE = {MediaStore.Images.Media.DATA};
-                Cursor cursor = getContentResolver().query(URI, FILE, null, null, null);
-                cursor.moveToFirst();
-
-                int columnIndex = cursor.getColumnIndex(FILE[0]);
-                ImageDecode = cursor.getString(columnIndex);
-                cursor.close();
-
-                imageViewLoad.setImageBitmap(BitmapFactory.decodeFile(ImageDecode));
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            //everything processed successfully
+            if (requestCode == Image_Gallery_Request) {
+                //image gallery correctly responds
+                Uri imageUri = data.getData();  //address of image on SD Card
+                InputStream inputStream;        //declaring stream to read data from SD card
+                try {
+                    inputStream = getContentResolver().openInputStream(imageUri);
+                    Bitmap imagebtmp = BitmapFactory.decodeStream(inputStream);       //Puts stream data into bitmap format
+                    Profile_Picture.setImageBitmap(imagebtmp);                        //Loads Image to ImageView
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    //error message if image is unavailable
+                    Toast.makeText(this, "Unable to open image", Toast.LENGTH_LONG).show();
+                }
             }
-        }catch(Exception e){
-            Toast.makeText(this,"Please try again",Toast.LENGTH_LONG).show();
         }
     }
 }
