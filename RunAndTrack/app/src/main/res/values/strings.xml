@@ -7,4 +7,7 @@
     <string name="cancel">Cancel</string>
     <string name="end">End</string>
     <string name="pause">PAUSE</string>
+
+    <string name="total_distance_s">Total Distance:&#160;</string>
+    <string name="average_speed_s">Average Speed:&#160;</string>
 </resources>
