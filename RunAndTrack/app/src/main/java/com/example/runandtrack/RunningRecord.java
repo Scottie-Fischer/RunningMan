@@ -17,4 +17,11 @@ public class RunningRecord extends AppCompatActivity {
         Intent firstIntent= new Intent(this, History.class);
         startActivityForResult(firstIntent, 1);
     }
+
+    // Redirect to the History page once cancel button is clicked on
+    // Will not make any changes to the database
+    public void cancelRecord(View view){
+        Intent firstIntent= new Intent(this,History.class);
+        startActivityForResult(firstIntent,1);
+    }
 }
