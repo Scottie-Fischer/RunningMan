@@ -9,8 +9,9 @@ import android.widget.EditText;
 public class RunningRecord extends AppCompatActivity {
 	public static String RUN_DISTANCE = "run_distance";
     public static String RUN_TIME = "run_time";
-    EditText editDistance, editTime;
-    float distance;
+    public static String RUN_AVGSPEED = "run_avgspeed";
+    EditText editDistance, editTime, editAvgSpeed;
+    float distance, avgspeed;
     int time;
 
     @Override
@@ -20,12 +21,15 @@ public class RunningRecord extends AppCompatActivity {
 
         editDistance = findViewById(R.id.recordDistance);
         editTime = findViewById(R.id.recordTime);
+        editAvgSpeed = findViewById(R.id.recordSpeed);
 
         Intent intent = getIntent();
         distance = (float)intent.getDoubleExtra(RUN_DISTANCE, 0.001f);
         time = intent.getIntExtra(RUN_TIME, 600);
+        avgspeed = (float)intent.getDoubleExtra(RUN_AVGSPEED, 0.001f);
         editDistance.setText(Float.toString(distance));
         editTime.setText(Integer.toString(time));
+        editAvgSpeed.setText(Float.toString(avgspeed));
     }
 
     public void saveRecord(View view) {
