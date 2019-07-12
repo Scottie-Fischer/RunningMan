@@ -93,6 +93,8 @@ public class RunningMode extends AppCompatActivity {
     public void onClickEnd(View view){
         running = false;
         Intent secondIntent= new Intent(this,RunningRecord.class);
+        secondIntent.putExtra(RunningRecord.RUN_TIME, seconds);
+        secondIntent.putExtra(RunningRecord.RUN_DISTANCE, totalDistanceValue);
         seconds = 0;
         totalDistanceValue = 0;
         averageSpeedValue = 0;

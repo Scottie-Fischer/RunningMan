@@ -4,13 +4,28 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 public class RunningRecord extends AppCompatActivity {
+	public static String RUN_DISTANCE = "run_distance";
+    public static String RUN_TIME = "run_time";
+    EditText editDistance, editTime;
+    float distance;
+    int time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_running_record);
+
+        editDistance = findViewById(R.id.recordDistance);
+        editTime = findViewById(R.id.recordTime);
+
+        Intent intent = getIntent();
+        distance = (float)intent.getDoubleExtra(RUN_DISTANCE, 0.001f);
+        time = intent.getIntExtra(RUN_TIME, 600);
+        editDistance.setText(Float.toString(distance));
+        editTime.setText(Integer.toString(time));
     }
 
     public void saveRecord(View view) {
