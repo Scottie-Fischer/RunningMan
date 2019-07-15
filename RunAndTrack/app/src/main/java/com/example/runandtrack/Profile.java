@@ -117,14 +117,19 @@ public class Profile extends AppCompatActivity {
     }
     //Encodes the Profile Image Bitmap to a String in order to Save into sharedPreference
     public static String encodeTobase64(Bitmap image){
-        Bitmap image2 = image;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        image2.compress(Bitmap.CompressFormat.PNG,100,baos);
-        byte[] b = baos.toByteArray();
-        String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
+        if(image != null) {
+            Bitmap image2 = image;
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            image2.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte[] b = baos.toByteArray();
+            String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 
-        Log.d("Image Log:",imageEncoded);
-        return imageEncoded;
+            Log.d("Image Log:", imageEncoded);
+            return imageEncoded;
+        }
+        else{
+            return "";
+        }
     }
     //Decodes the Saved encoded image back to a Bitmap in order to load into ImageView
     public static Bitmap decodeBase64(String input){
@@ -136,7 +141,7 @@ public class Profile extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         SharedPreferences.Editor edit = sh.edit();
-        if(Profile_Picture.getDrawable()!= null) {
+        if(Profile_Picture.getDrawable() != null) {
             setProfileImage = ((BitmapDrawable) Profile_Picture.getDrawable()).getBitmap();
             edit.putString("imagePreference",encodeTobase64(setProfileImage));
         }
