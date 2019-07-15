@@ -115,6 +115,7 @@ public class Profile extends AppCompatActivity {
             }
         }
     }
+    //Encodes the Profile Image Bitmap to a String in order to Save into sharedPreference
     public static String encodeTobase64(Bitmap image){
         Bitmap image2 = image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -125,6 +126,7 @@ public class Profile extends AppCompatActivity {
         Log.d("Image Log:",imageEncoded);
         return imageEncoded;
     }
+    //Decodes the Saved encoded image back to a Bitmap in order to load into ImageView
     public static Bitmap decodeBase64(String input){
         byte[] decodedByte = Base64.decode(input, 0);
         return BitmapFactory.decodeByteArray(decodedByte,0,decodedByte.length);

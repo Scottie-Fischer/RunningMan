@@ -31,28 +31,31 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="326dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="130dp">
 
             <ImageView
                 android:id="@+id/Profile_Picture"
-                android:layout_width="180dp"
-                android:layout_height="150dp"
+                android:layout_width="160dp"
+                android:layout_height="130dp"
                 android:layout_weight="1"
-                tools:srcCompat="@android:drawable/sym_def_app_icon" />
-
+                tools:srcCompat="@tools:sample/avatars" />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="25dp" />
             <Button
                 android:id="@+id/Edit_Profile_Picture_Button"
                 style="@style/Widget.AppCompat.Button.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:layout_centerHorizontal="true"
+                android:layout_width="160dp"
+                android:layout_height="55dp"
                 android:layout_weight="0.5"
                 android:background="#AAC8FF"
                 android:onClick="onImageGalleryClicked"
                 android:text="Edit Profile Picture" />
-
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="25dp" />
 
         </LinearLayout>
 
@@ -162,7 +165,9 @@
 
 
     </LinearLayout>
-
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="50dp" />
     <Button
         android:id="@+id/ProfileHomeButton"
         android:layout_width="match_parent"

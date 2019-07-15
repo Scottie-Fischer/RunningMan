@@ -16,6 +16,16 @@
         android:textColor="#005e63"
         android:textSize="40sp"/>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/historyRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="10dp"
+        android:textColor="#005e63"
+        android:textSize="16dp"
+        android:scrollbars="vertical" />
+
     <Button
         android:id="@+id/HistoryHomeButton"
         android:layout_width="match_parent"

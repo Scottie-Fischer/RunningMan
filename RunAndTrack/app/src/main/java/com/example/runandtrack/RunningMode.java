@@ -39,10 +39,15 @@ public class RunningMode extends AppCompatActivity {
     private TextView totalDistanceNew, averageSpeedNew;
     private double totalDistanceValue, averageSpeedValue;
     private String totalDistanceString, averageSpeedString;
-
+    View recordDelete;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Loads in the Record Delete Button from Running Record Layout
+        setContentView(R.layout.activity_running_record);
+        recordDelete = findViewById(R.id.deleteRecord);
+
         setContentView(R.layout.activity_running_mode);
         //Call the runTimer()
         runTimer();
@@ -92,6 +97,9 @@ public class RunningMode extends AppCompatActivity {
     //End the timer when the End button is clicked 
     public void onClickEnd(View view){
         running = false;
+        setContentView(R.layout.activity_running_record);
+        recordDelete.setVisibility(view.VISIBLE);
+        setContentView(R.layout.activity_running_mode);
         Intent secondIntent= new Intent(this,RunningRecord.class);
         secondIntent.putExtra(RunningRecord.RUN_TIME, seconds);
         secondIntent.putExtra(RunningRecord.RUN_DISTANCE, totalDistanceValue);

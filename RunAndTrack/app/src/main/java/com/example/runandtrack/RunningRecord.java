@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class RunningRecord extends AppCompatActivity {
@@ -18,7 +19,13 @@ public class RunningRecord extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_running_record);
-
+        View recordDelete = findViewById(R.id.deleteRecord);
+        /*if(recordDelete.getVisibility() == View.GONE){
+            recordDelete.setVisibility(View.GONE);
+        }
+        else{
+            recordDelete.setVisibility(View.VISIBLE);
+        }*/
         editDistance = findViewById(R.id.recordDistance);
         editTime = findViewById(R.id.recordTime);
         editAvgSpeed = findViewById(R.id.recordSpeed);
