@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
 
 public class RunDatabase extends SQLiteOpenHelper {
     private static RunDatabase db;
@@ -47,6 +49,36 @@ public class RunDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void insert(int calories, float distance, int time) {
+        Log.d("Database", "Inserting");
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COL_CALORIES, calories);
+        cv.put(COL_DISTANCE, distance);
+        cv.put(COL_TIME, time);
+        db.insert(TABLE_NAME, null, cv);
+        db.close();
+    }
 
-
+    public ArrayList<RecordHelper> view() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<RecordHelper> list = new ArrayList<RecordHelper>();
+        String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + COL_DATE + " DESC";
+        Log.d("RunDatabase", sql);
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Log.d("RunDatabase", "Extracting");
+                RecordHelper record = new RecordHelper();
+                record.setRecordId(cursor.getInt(0));
+                record.setRecordDate(cursor.getString(1));
+                record.setRecordCalories(cursor.getInt(2));
+                record.setRecordDistance(cursor.getFloat(3));
+                record.setRecordTime(cursor.getInt(4));
+                list.add(record);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return list;
+    }
 }

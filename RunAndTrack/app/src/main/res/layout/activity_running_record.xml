@@ -66,31 +66,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textRecSpd"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:text="Avg Speed (m/s):"
-            android:textColor="#000000"
-            android:textSize="18dp" />
-
-        <EditText
-            android:id="@+id/recordSpeed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Average Speed"
-            android:inputType="numberDecimal" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="257dp"
+        android:layout_height="355dp"
         android:orientation="horizontal">
 
         <TextView
