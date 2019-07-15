@@ -53,6 +53,7 @@ public class History extends AppCompatActivity implements RecordAdapter.OnRecord
         intent.putExtra(RunningRecord.RUN_DISTANCE, distance);
         intent.putExtra(RunningRecord.RUN_TIME, seconds);
         intent.putExtra(RunningRecord.RUN_CALORIES, calories);
+        intent.putExtra(RunningRecord.SHOULD_SHOW, false);
         startActivity(intent);
     }
 }

@@ -15,16 +15,21 @@ public class RunningRecord extends AppCompatActivity {
 	public static String RUN_DISTANCE = "run_distance";
     public static String RUN_TIME = "run_time";
     public static String RUN_CALORIES = "run_calories";
+    public static final String SHOULD_SHOW = "should";
+
+    private Button saveBtn;
     SharedPreferences sh;
     RunDatabase db;
     EditText editDistance, editTime, editCalories;
     float distance, weight;
     int time, calories;
+    boolean showButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_running_record);
+        saveBtn = findViewById(R.id.saveRecord);
         db = RunDatabase.getInstance(this);
         View recordDelete = findViewById(R.id.deleteRecord);
         /*if(recordDelete.getVisibility() == View.GONE){
@@ -43,6 +48,13 @@ public class RunningRecord extends AppCompatActivity {
         calories = intent.getIntExtra(RUN_CALORIES, -1);
         editDistance.setText(Float.toString(distance));
         editTime.setText(Integer.toString(time));
+
+        showButton = intent.getBooleanExtra(SHOULD_SHOW, true);
+        if(showButton == false) {
+            saveBtn.setVisibility(View.INVISIBLE);
+        } else {
+            saveBtn.setVisibility(View.VISIBLE);
+        }
 
         //Calculate the calories being burnt per run
         if (calories == -1) {
