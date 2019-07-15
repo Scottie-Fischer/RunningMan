@@ -11,12 +11,12 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.app.Activity;
-import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +24,7 @@ import android.provider.MediaStore;
 import android.content.Intent;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -33,7 +34,7 @@ public class Profile extends AppCompatActivity {
     private ImageView Profile_Picture;
     SharedPreferences sh;
     EditText editWeight, editName, editAge, editSex;
-
+    Bitmap setProfileImage;
     //This method will be invoked when the user clicks the edit button
     public void onImageGalleryClicked(View v){
         //invoke the image gallery using an implicit intent
@@ -77,6 +78,11 @@ public class Profile extends AppCompatActivity {
         }
         editName.setText(name);
         editSex.setText(sex);
+        if(sh.getString("imagePreference","") != null) {
+            String p = sh.getString("imagePreference","");
+            Bitmap bm = decodeBase64(p);
+            Profile_Picture.setImageBitmap(bm);
+        }
         Button ProfileHomeButton = (Button)findViewById(R.id.ProfileHomeButton);
         ProfileHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,10 +115,29 @@ public class Profile extends AppCompatActivity {
             }
         }
     }
+    public static String encodeTobase64(Bitmap image){
+        Bitmap image2 = image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image2.compress(Bitmap.CompressFormat.PNG,100,baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
+
+        Log.d("Image Log:",imageEncoded);
+        return imageEncoded;
+    }
+    public static Bitmap decodeBase64(String input){
+        byte[] decodedByte = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedByte,0,decodedByte.length);
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
         SharedPreferences.Editor edit = sh.edit();
+        if(Profile_Picture.getDrawable()!= null) {
+            setProfileImage = ((BitmapDrawable) Profile_Picture.getDrawable()).getBitmap();
+            edit.putString("imagePreference",encodeTobase64(setProfileImage));
+        }
         if (!editWeight.getText().toString().isEmpty())
             edit.putFloat("profileWeight", Float.parseFloat(editWeight.getText().toString()));
         if (!editAge.getText().toString().isEmpty())
@@ -120,21 +145,6 @@ public class Profile extends AppCompatActivity {
         edit.putString("profileName", editName.getText().toString());
         edit.putString("profileSex", editSex.getText().toString());
 
-        Bitmap bm = ((BitmapDrawable)Profile_Picture.getDrawable()).getBitmap();
-        //Profile_Picture.setImageBitmap(bm);
         edit.apply();
-    }
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Bitmap bm = ((BitmapDrawable)Profile_Picture.getDrawable()).getBitmap();
-        outState.putParcelable("Profile_Bitmap",bm);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        Bitmap bm = savedInstanceState.getParcelable("Profile_Bitmap");
-        Profile_Picture.setImageBitmap(bm);
     }
 }
