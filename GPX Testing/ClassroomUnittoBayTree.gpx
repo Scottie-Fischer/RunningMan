@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" creator="mapstogpx.com" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">
+  <metadata>
+    <link href="http://www.mapstogpx.com">
+      <text>Sverrir Sigmundarson</text>
+    </link>
+    <!--desc>Map data ©2019 Google</desc-->
+    <!--copyright author="Google Inc">
+    	<year>2019</year>
+    	<license>https://developers.google.com/maps/terms</license>
+    </copyright-->
+    <!--url>https://www.google.co.uk/maps/dir/Classroom Unit, Santa Cruz, CA 95064/The Bay Tree Bookstore, Hagar Drive, Santa Cruz, CA/@36.9978226,-122.0577714,17.12z/data=!4m14!4m13!1m5!1m1!1s0x808e41a0e70e936d:0x96e6f5306c6d34ff!2m2!1d-122.0568444!2d36.997919!1m5!1m1!1s0x808e41a0d59e6699:0x183b8786aeb3fb84!2m2!1d-122.0556197!2d36.9979857!3e2?hl=en</url-->
+    <time>2019-06-05T23:42:20Z</time>
+  </metadata>
+<trk>
+  <name>Classroom Unit to The Bay Tree Bookstore</name>
+  <number>1</number>
+  <trkseg>
+  <trkpt lat="36.9977931" lon="-122.056823">
+    <name>TP001</name>
+  </trkpt>
+  <trkpt lat="36.99782" lon="-122.05654">
+    <name>TP002</name>
+  </trkpt>
+  <trkpt lat="36.99789" lon="-122.05639">
+    <name>TP003</name>
+  </trkpt>
+  <trkpt lat="36.99789" lon="-122.05621">
+    <name>TP004</name>
+  </trkpt>
+  <trkpt lat="36.9978925" lon="-122.0562132">
+    <name>TP005</name>
+  </trkpt>
+  <trkpt lat="36.9978925" lon="-122.0562132">
+    <name>TP006</name>
+  </trkpt>
+  <trkpt lat="36.99778" lon="-122.05615">
+    <name>TP007</name>
+  </trkpt>
+  <trkpt lat="36.9977821" lon="-122.0561521">
+    <name>TP008</name>
+  </trkpt>
+  <trkpt lat="36.9977821" lon="-122.0561521">
+    <name>TP009</name>
+  </trkpt>
+  <trkpt lat="36.99773" lon="-122.05592">
+    <name>TP010</name>
+  </trkpt>
+  <trkpt lat="36.99776" lon="-122.05591">
+    <name>TP011</name>
+  </trkpt>
+  <trkpt lat="36.99775" lon="-122.05585">
+    <name>TP012</name>
+  </trkpt>
+  <trkpt lat="36.99773" lon="-122.05579">
+    <name>TP013</name>
+  </trkpt>
+  <trkpt lat="36.9977346" lon="-122.0557859">
+    <name>TP014</name>
+  </trkpt>
+  <trkpt lat="36.9977346" lon="-122.0557859">
+    <name>TP015</name>
+  </trkpt>
+  <trkpt lat="36.99776" lon="-122.05578">
+    <name>TP016</name>
+  </trkpt>
+  <trkpt lat="36.99786" lon="-122.05576">
+    <name>TP017</name>
+  </trkpt>
+  <trkpt lat="36.99796" lon="-122.05572">
+    <name>TP018</name>
+  </trkpt>
+  <trkpt lat="36.99801" lon="-122.05571">
+    <name>TP019</name>
+  </trkpt>
+  <trkpt lat="36.9980069" lon="-122.0557055">
+    <name>TP020</name>
+  </trkpt>
+  </trkseg>
+</trk>
+</gpx>
