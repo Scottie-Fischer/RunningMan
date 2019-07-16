@@ -42,6 +42,11 @@ public class RunningRecord extends AppCompatActivity {
         editTime = findViewById(R.id.recordTime);
         editCalories = findViewById(R.id.recordCalories);
 
+        //Makes the Text Not Editable By the User
+        editDistance.setKeyListener(null);
+        editTime.setKeyListener(null);
+        editCalories.setKeyListener(null);
+
         Intent intent = getIntent();
         distance = (float)intent.getDoubleExtra(RUN_DISTANCE, 0.001f);
         time = intent.getIntExtra(RUN_TIME, 600);
