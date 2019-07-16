@@ -37,7 +37,8 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Calories"
-            android:inputType="number" />
+            android:inputType="number"
+            android:clickable="false"/>
     </LinearLayout>
 
     <LinearLayout
@@ -61,7 +62,8 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Distance"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:clickable="false"/>
     </LinearLayout>
 
     <LinearLayout
@@ -85,7 +87,8 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Time"
-            android:inputType="number" />
+            android:inputType="number"
+            android:clickable="false"/>
     </LinearLayout>
 
     <Button
