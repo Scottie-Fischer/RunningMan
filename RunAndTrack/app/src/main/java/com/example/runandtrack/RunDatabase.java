@@ -59,6 +59,25 @@ public class RunDatabase extends SQLiteOpenHelper {
         db.insert(TABLE_NAME, null, cv);
         db.close();
     }
+    public void remove(String time){
+        SQLiteDatabase db = this.getWritableDatabase();
+        //String ID = getID(time);
+        try {
+            db.delete(TABLE_NAME, COL_TIME + " = ?", new String[]{time});
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        db.close();
+
+    }
+    /*
+    public Cursor getID(int time){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT" + COL_ID + " FROM " + TABLE_NAME + " WHERE " + COL_TIME + " = " + time;
+        Cursor data = db.rawQuery(query,null);
+        return data;
+    }*/
 
     public ArrayList<RecordHelper> view() {
         SQLiteDatabase db = this.getWritableDatabase();

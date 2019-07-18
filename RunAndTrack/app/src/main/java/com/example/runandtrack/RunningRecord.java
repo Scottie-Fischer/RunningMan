@@ -18,6 +18,8 @@ public class RunningRecord extends AppCompatActivity {
     public static final String SHOULD_SHOW = "should";
 
     private Button saveBtn;
+    private Button recordDelete;
+    private EditText recordTime;
     SharedPreferences sh;
     RunDatabase db;
     EditText editDistance, editTime, editCalories;
@@ -31,13 +33,9 @@ public class RunningRecord extends AppCompatActivity {
         setContentView(R.layout.activity_running_record);
         saveBtn = findViewById(R.id.saveRecord);
         db = RunDatabase.getInstance(this);
-        View recordDelete = findViewById(R.id.deleteRecord);
-        /*if(recordDelete.getVisibility() == View.GONE){
-            recordDelete.setVisibility(View.GONE);
-        }
-        else{
-            recordDelete.setVisibility(View.VISIBLE);
-        }*/
+
+        recordDelete = findViewById(R.id.deleteRecord);
+
         editDistance = findViewById(R.id.recordDistance);
         editTime = findViewById(R.id.recordTime);
         editCalories = findViewById(R.id.recordCalories);
@@ -46,6 +44,7 @@ public class RunningRecord extends AppCompatActivity {
         editDistance.setKeyListener(null);
         editTime.setKeyListener(null);
         editCalories.setKeyListener(null);
+
 
         Intent intent = getIntent();
         distance = (float)intent.getDoubleExtra(RUN_DISTANCE, 0.001f);
@@ -57,8 +56,10 @@ public class RunningRecord extends AppCompatActivity {
         showButton = intent.getBooleanExtra(SHOULD_SHOW, true);
         if(showButton == false) {
             saveBtn.setVisibility(View.INVISIBLE);
+            recordDelete.setVisibility(View.VISIBLE);
         } else {
             saveBtn.setVisibility(View.VISIBLE);
+            recordDelete.setVisibility(View.GONE);
         }
 
         //Calculate the calories being burnt per run
@@ -88,6 +89,18 @@ public class RunningRecord extends AppCompatActivity {
     // Will not make any changes to the database
     public void cancelRecord(View view){
         Intent firstIntent= new Intent(this,History.class);
+        startActivityForResult(firstIntent,1);
+    }
+
+    //Redirects to the History page
+    //Pulls data from the date entry in order to delete the entry from SQL database
+    public void deleteRecord(View view){
+        db = RunDatabase.getInstance(this);
+        recordTime = findViewById(R.id.recordTime);
+        String DATE = recordTime.getText().toString();
+        System.out.println("DATE: " + DATE);
+        db.remove(DATE);
+        Intent firstIntent = new Intent(this,History.class);
         startActivityForResult(firstIntent,1);
     }
 }
