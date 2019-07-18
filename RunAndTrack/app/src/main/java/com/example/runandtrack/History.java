@@ -50,9 +50,11 @@ public class History extends AppCompatActivity implements RecordAdapter.OnRecord
         float distance = record.getRecordDistance();
         int seconds = record.getRecordTime();
         int calories = record.getRecordCalories();
+        String date = record.getRecordDate();
         intent.putExtra(RunningRecord.RUN_DISTANCE, distance);
         intent.putExtra(RunningRecord.RUN_TIME, seconds);
         intent.putExtra(RunningRecord.RUN_CALORIES, calories);
+        intent.putExtra(RunningRecord.RUN_DATE,date);
         intent.putExtra(RunningRecord.SHOULD_SHOW, false);
         startActivity(intent);
     }

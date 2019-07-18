@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.LinkedList;
 
 public class RunningMode extends AppCompatActivity {
@@ -99,10 +100,12 @@ public class RunningMode extends AppCompatActivity {
         running = false;
         setContentView(R.layout.activity_running_record);
         recordDelete.setVisibility(view.VISIBLE);
+        Date date = new Date();
         setContentView(R.layout.activity_running_mode);
         Intent secondIntent= new Intent(this,RunningRecord.class);
         secondIntent.putExtra(RunningRecord.RUN_TIME, seconds);
         secondIntent.putExtra(RunningRecord.RUN_DISTANCE, totalDistanceValue);
+        secondIntent.putExtra(RunningRecord.RUN_DATE,date.toString());
         seconds = 0;
         totalDistanceValue = 0;
         averageSpeedValue = 0;

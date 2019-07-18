@@ -49,21 +49,22 @@ public class RunDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insert(int calories, float distance, int time) {
+    public void insert(int calories, float distance, int time,String date) {
         Log.d("Database", "Inserting");
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COL_CALORIES, calories);
         cv.put(COL_DISTANCE, distance);
         cv.put(COL_TIME, time);
+        cv.put(COL_DATE,date);
         db.insert(TABLE_NAME, null, cv);
         db.close();
     }
-    public void remove(String time){
+    public void remove(String date){
         SQLiteDatabase db = this.getWritableDatabase();
         //String ID = getID(time);
         try {
-            db.delete(TABLE_NAME, COL_TIME + " = ?", new String[]{time});
+            db.delete(TABLE_NAME, COL_DATE + " = ?", new String[] {date});
         }
         catch(Exception e){
             e.printStackTrace();

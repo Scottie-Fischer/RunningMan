@@ -15,11 +15,12 @@ public class RunningRecord extends AppCompatActivity {
 	public static String RUN_DISTANCE = "run_distance";
     public static String RUN_TIME = "run_time";
     public static String RUN_CALORIES = "run_calories";
+    public static String RUN_DATE = "run_date";
     public static final String SHOULD_SHOW = "should";
 
     private Button saveBtn;
     private Button recordDelete;
-    private EditText recordTime;
+    private EditText recordDate,editDate;
     SharedPreferences sh;
     RunDatabase db;
     EditText editDistance, editTime, editCalories;
@@ -39,19 +40,22 @@ public class RunningRecord extends AppCompatActivity {
         editDistance = findViewById(R.id.recordDistance);
         editTime = findViewById(R.id.recordTime);
         editCalories = findViewById(R.id.recordCalories);
-
+        editDate = findViewById(R.id.recordDate);
         //Makes the Text Not Editable By the User
         editDistance.setKeyListener(null);
         editTime.setKeyListener(null);
         editCalories.setKeyListener(null);
+        editDate.setKeyListener(null);
 
 
         Intent intent = getIntent();
         distance = (float)intent.getDoubleExtra(RUN_DISTANCE, 0.001f);
         time = intent.getIntExtra(RUN_TIME, 600);
+        String date = intent.getStringExtra(RUN_DATE);
         calories = intent.getIntExtra(RUN_CALORIES, -1);
         editDistance.setText(Float.toString(distance));
         editTime.setText(Integer.toString(time));
+        editDate.setText(date);
 
         showButton = intent.getBooleanExtra(SHOULD_SHOW, true);
         if(showButton == false) {
@@ -77,9 +81,10 @@ public class RunningRecord extends AppCompatActivity {
     }
 
     public void saveRecord(View view) {
+        System.out.println("Saving date: " + editDate);
         db.insert(Integer.parseInt(editCalories.getText().toString()),
                 parseFloat(editDistance.getText().toString()),
-                Integer.parseInt(editTime.getText().toString()));
+                Integer.parseInt(editTime.getText().toString()),(editDate.getText().toString()));
         finish();
         Intent firstIntent= new Intent(this, History.class);
         startActivityForResult(firstIntent, 1);
@@ -96,10 +101,12 @@ public class RunningRecord extends AppCompatActivity {
     //Pulls data from the date entry in order to delete the entry from SQL database
     public void deleteRecord(View view){
         db = RunDatabase.getInstance(this);
-        recordTime = findViewById(R.id.recordTime);
-        String DATE = recordTime.getText().toString();
-        System.out.println("DATE: " + DATE);
+        recordDate = findViewById(R.id.recordDate);
+
+        String DATE = recordDate.getText().toString();
         db.remove(DATE);
+
+        //redirects to History Page
         Intent firstIntent = new Intent(this,History.class);
         startActivityForResult(firstIntent,1);
     }
