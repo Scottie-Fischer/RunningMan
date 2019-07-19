@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,7 +22,16 @@ import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.LinkedList;
 
-public class RunningMode extends AppCompatActivity {
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+
+public class RunningMode extends AppCompatActivity implements OnMapReadyCallback {
     //Timer
     private int seconds = 0;
     private boolean running;
@@ -40,7 +50,14 @@ public class RunningMode extends AppCompatActivity {
     private TextView totalDistanceNew, averageSpeedNew;
     private double totalDistanceValue, averageSpeedValue;
     private String totalDistanceString, averageSpeedString;
+    //Map
+    private GoogleMap mMap;
+    SupportMapFragment mapFragment;
+    private Marker endMarker;
+    private Marker startMarker;
+
     View recordDelete;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +76,8 @@ public class RunningMode extends AppCompatActivity {
             lm = getLocationManager();
         //Set the Start and Pause Button
         StartAndPause = findViewById(R.id.Start_Pause_button);
+        //Set up map
+        initMap();
 
         StartAndPause.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -70,6 +89,36 @@ public class RunningMode extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    //Obtain the SupportMapFragment and get notified when the map is ready to be used.
+    public void initMap() {
+        if (mMap == null) {
+            mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.routeMap);
+            mapFragment.getMapAsync(this);
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap){
+        Location startLocation = null;
+        LatLng startLatLgn = null;
+        mMap = googleMap;
+
+        //Place a red marker on starting point
+        if ((granted || checkPermission()) && !running) {
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,listener);
+            startLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            startLatLgn = new LatLng(startLocation.getLatitude(), startLocation.getLongitude());
+
+            /*if(startMarker != null){
+                startMarker.remove();
+            }*/
+
+            startMarker = mMap.addMarker(new MarkerOptions().position(startLatLgn).title("A"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLatLgn, 16));
+            lm.removeUpdates(listener);
+        }
     }
 
     //Start the timer when the Start button is clicked 
@@ -98,14 +147,15 @@ public class RunningMode extends AppCompatActivity {
     //End the timer when the End button is clicked 
     public void onClickEnd(View view){
         running = false;
-        setContentView(R.layout.activity_running_record);
+
         recordDelete.setVisibility(view.VISIBLE);
         Date date = new Date();
-        setContentView(R.layout.activity_running_mode);
+
         Intent secondIntent= new Intent(this,RunningRecord.class);
         secondIntent.putExtra(RunningRecord.RUN_TIME, seconds);
         secondIntent.putExtra(RunningRecord.RUN_DISTANCE, totalDistanceValue);
         secondIntent.putExtra(RunningRecord.RUN_DATE,date.toString());
+
         seconds = 0;
         totalDistanceValue = 0;
         averageSpeedValue = 0;
@@ -203,6 +253,14 @@ public class RunningMode extends AppCompatActivity {
             averageSpeedNew.setText(averageSpeedString + decimal.format(averageSpeedValue) + ms);
             // Update new position
             locations.add(location);
+            //Add an azure marker to current position in map
+            if (endMarker != null) {
+                endMarker.remove();
+            };
+            LatLng currentLatLgn = new LatLng(location.getLatitude(), location.getLongitude());
+            endMarker = mMap.addMarker(new MarkerOptions().position(currentLatLgn).title("B")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLgn, 16));
         }
         @Override
         public void onProviderEnabled(String provider) {}

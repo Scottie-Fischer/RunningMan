@@ -9,13 +9,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import static java.lang.Float.parseFloat;
 
-public class RunningRecord extends AppCompatActivity {
+public class RunningRecord extends AppCompatActivity implements OnMapReadyCallback {
 	public static String RUN_DISTANCE = "run_distance";
     public static String RUN_TIME = "run_time";
     public static String RUN_CALORIES = "run_calories";
     public static String RUN_DATE = "run_date";
+    public static String RUN_START = "run_start";
+    public static String RUN_END = "run_end";
     public static final String SHOULD_SHOW = "should";
 
     private Button saveBtn;
@@ -28,12 +36,20 @@ public class RunningRecord extends AppCompatActivity {
     int time, calories;
     boolean showButton;
 
+    //Map
+    private GoogleMap mMap;
+    SupportMapFragment mapFragment;
+    LatLng startPosition, endPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_running_record);
         saveBtn = findViewById(R.id.saveRecord);
         db = RunDatabase.getInstance(this);
+
+        //Set up map
+        initMap();
 
         recordDelete = findViewById(R.id.deleteRecord);
 
@@ -53,6 +69,8 @@ public class RunningRecord extends AppCompatActivity {
         time = intent.getIntExtra(RUN_TIME, 600);
         String date = intent.getStringExtra(RUN_DATE);
         calories = intent.getIntExtra(RUN_CALORIES, -1);
+        startPosition = intent.getParcelableExtra(RUN_START);
+        endPosition = intent.getParcelableExtra(RUN_END);
         editDistance.setText(Float.toString(distance));
         editTime.setText(Integer.toString(time));
         editDate.setText(date);
@@ -78,6 +96,24 @@ public class RunningRecord extends AppCompatActivity {
             calories = Math.round(weight * hours * 30 / speed);
         }
         editCalories.setText(Integer.toString(calories));
+    }
+
+    //Obtain the SupportMapFragment and get notified when the map is ready to be used.
+    public void initMap() {
+        if (mMap == null) {
+            mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map2);
+            mapFragment.getMapAsync(this);
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        if(startPosition != null && endPosition != null) {
+            mMap.addMarker(new MarkerOptions().position(startPosition).title("A"));
+            mMap.addMarker(new MarkerOptions().position(endPosition).title("B"));
+        }
+
     }
 
     public void saveRecord(View view) {
