@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -61,6 +60,7 @@ public class RunningRecord extends AppCompatActivity implements OnMapReadyCallba
         editTime = findViewById(R.id.recordTime);
         editCalories = findViewById(R.id.recordCalories);
         editDate = findViewById(R.id.recordDate);
+
         //Makes the Text Not Editable By the User
         editDistance.setKeyListener(null);
         editTime.setKeyListener(null);
@@ -119,27 +119,29 @@ public class RunningRecord extends AppCompatActivity implements OnMapReadyCallba
         LatLng startCoord =  null , endCoord = null;
         Boolean emptyMap = true;
 
+        //Add running start position to the map
         if(startPosition != null) {
             startCoord = new LatLng(startPosition.getDouble("startLat"), startPosition.getDouble("startLng"));
             mMap.addMarker(new MarkerOptions().position(startCoord).title("A"));
             bounds.include(startCoord);
             emptyMap = false;
         }
+        //And running end position to the map
         if(endPosition != null){
             endCoord = new LatLng(endPosition.getDouble("endLat"), endPosition.getDouble("endLng"));
             mMap.addMarker(new MarkerOptions().position(endCoord).title("B")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             bounds.include(endCoord);
         }
-
         //auto-zoom and auto-center map where markers are located
         if(!emptyMap) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 20));
             mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
         }
-
     }
 
+    //Redirects to the History page
+    //Saves the running data to the database
     public void saveRecord(View view) {
         System.out.println("Saving date: " + editDate);
         db.insert(Integer.parseInt(editCalories.getText().toString()),
