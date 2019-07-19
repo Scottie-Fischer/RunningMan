@@ -23,7 +23,7 @@
 
         <TextView
             android:id="@+id/textRecDate"
-            android:layout_width="140dp"
+            android:layout_width="122dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="Date:"
@@ -32,13 +32,13 @@
 
         <EditText
             android:id="@+id/recordDate"
-            android:layout_width="wrap_content"
+            android:layout_width="271dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:clickable="false"
             android:ems="10"
             android:hint="Date"
-            android:inputType="numberDecimal"
-            android:clickable="false"/>
+            android:inputType="numberDecimal" />
     </LinearLayout>
 
     <LinearLayout
@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/textRecCal"
-            android:layout_width="140dp"
+            android:layout_width="122dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="Calories:"
@@ -73,7 +73,7 @@
 
         <TextView
             android:id="@+id/textRecDist"
-            android:layout_width="140dp"
+            android:layout_width="122dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="Distance(km):"
@@ -98,7 +98,7 @@
 
         <TextView
             android:id="@+id/textRecTime"
-            android:layout_width="140dp"
+            android:layout_width="122dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="Time(sec):"

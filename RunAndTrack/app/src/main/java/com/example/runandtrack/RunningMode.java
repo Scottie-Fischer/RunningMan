@@ -52,9 +52,11 @@ public class RunningMode extends AppCompatActivity implements OnMapReadyCallback
     private String totalDistanceString, averageSpeedString;
     //Map
     private GoogleMap mMap;
-    SupportMapFragment mapFragment;
+    private SupportMapFragment mapFragment;
     private Marker endMarker;
-    private Marker startMarker;
+    private LatLng startLatLgn = null;
+    private LatLng endLatLgn = null;
+    private Bundle startPosition = new Bundle(), endPosition =  new Bundle();
 
     View recordDelete;
 
@@ -102,7 +104,6 @@ public class RunningMode extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap){
         Location startLocation = null;
-        LatLng startLatLgn = null;
         mMap = googleMap;
 
         //Place a red marker on starting point
@@ -115,7 +116,7 @@ public class RunningMode extends AppCompatActivity implements OnMapReadyCallback
                 startMarker.remove();
             }*/
 
-            startMarker = mMap.addMarker(new MarkerOptions().position(startLatLgn).title("A"));
+            mMap.addMarker(new MarkerOptions().position(startLatLgn).title("A"));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLatLgn, 16));
             lm.removeUpdates(listener);
         }
@@ -155,6 +156,16 @@ public class RunningMode extends AppCompatActivity implements OnMapReadyCallback
         secondIntent.putExtra(RunningRecord.RUN_TIME, seconds);
         secondIntent.putExtra(RunningRecord.RUN_DISTANCE, totalDistanceValue);
         secondIntent.putExtra(RunningRecord.RUN_DATE,date.toString());
+
+        //Pass start and end coordinates to Running Record page
+        startPosition.putDouble("startLat", startLatLgn.latitude);
+        startPosition.putDouble("startLng", startLatLgn.longitude);
+        secondIntent.putExtra(RunningRecord.RUN_START, startPosition);
+        if(endLatLgn != null) {
+            endPosition.putDouble("endLat", endLatLgn.latitude);
+            endPosition.putDouble("endLng", endLatLgn.longitude);
+            secondIntent.putExtra(RunningRecord.RUN_END, endPosition);
+        }
 
         seconds = 0;
         totalDistanceValue = 0;
@@ -257,10 +268,10 @@ public class RunningMode extends AppCompatActivity implements OnMapReadyCallback
             if (endMarker != null) {
                 endMarker.remove();
             };
-            LatLng currentLatLgn = new LatLng(location.getLatitude(), location.getLongitude());
-            endMarker = mMap.addMarker(new MarkerOptions().position(currentLatLgn).title("B")
+            endLatLgn = new LatLng(location.getLatitude(), location.getLongitude());
+            endMarker = mMap.addMarker(new MarkerOptions().position(endLatLgn).title("B")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLgn, 16));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(endLatLgn, 16));
         }
         @Override
         public void onProviderEnabled(String provider) {}

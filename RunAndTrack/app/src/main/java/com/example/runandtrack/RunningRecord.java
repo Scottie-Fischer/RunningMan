@@ -9,10 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import static java.lang.Float.parseFloat;
@@ -39,7 +43,7 @@ public class RunningRecord extends AppCompatActivity implements OnMapReadyCallba
     //Map
     private GoogleMap mMap;
     SupportMapFragment mapFragment;
-    LatLng startPosition, endPosition;
+    Bundle startPosition, endPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +67,15 @@ public class RunningRecord extends AppCompatActivity implements OnMapReadyCallba
         editCalories.setKeyListener(null);
         editDate.setKeyListener(null);
 
-
+        //Get the running related data
         Intent intent = getIntent();
         distance = (float)intent.getDoubleExtra(RUN_DISTANCE, 0.001f);
         time = intent.getIntExtra(RUN_TIME, 600);
         String date = intent.getStringExtra(RUN_DATE);
         calories = intent.getIntExtra(RUN_CALORIES, -1);
-        startPosition = intent.getParcelableExtra(RUN_START);
-        endPosition = intent.getParcelableExtra(RUN_END);
+        startPosition = intent.getBundleExtra(RUN_START);
+        endPosition = intent.getBundleExtra(RUN_END);
+
         editDistance.setText(Float.toString(distance));
         editTime.setText(Integer.toString(time));
         editDate.setText(date);
@@ -106,12 +111,31 @@ public class RunningRecord extends AppCompatActivity implements OnMapReadyCallba
         }
     }
 
+    //Initial display of map when it is ready
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        if(startPosition != null && endPosition != null) {
-            mMap.addMarker(new MarkerOptions().position(startPosition).title("A"));
-            mMap.addMarker(new MarkerOptions().position(endPosition).title("B"));
+        LatLngBounds.Builder bounds = new LatLngBounds.Builder();
+        LatLng startCoord =  null , endCoord = null;
+        Boolean emptyMap = true;
+
+        if(startPosition != null) {
+            startCoord = new LatLng(startPosition.getDouble("startLat"), startPosition.getDouble("startLng"));
+            mMap.addMarker(new MarkerOptions().position(startCoord).title("A"));
+            bounds.include(startCoord);
+            emptyMap = false;
+        }
+        if(endPosition != null){
+            endCoord = new LatLng(endPosition.getDouble("endLat"), endPosition.getDouble("endLng"));
+            mMap.addMarker(new MarkerOptions().position(endCoord).title("B")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            bounds.include(endCoord);
+        }
+
+        //auto-zoom and auto-center map where markers are located
+        if(!emptyMap) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 20));
+            mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
         }
 
     }
