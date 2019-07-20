@@ -25,7 +25,6 @@ public class RunningRecord extends AppCompatActivity implements OnMapReadyCallba
     public static String RUN_TIME = "run_time";
     public static String RUN_CALORIES = "run_calories";
     public static String RUN_DATE = "run_date";
-    public static String RUN_START = "run_start";
     public static String RUN_END = "run_end";
     public static final String SHOULD_SHOW = "should";
 
@@ -42,7 +41,7 @@ public class RunningRecord extends AppCompatActivity implements OnMapReadyCallba
     //Map
     private GoogleMap mMap;
     SupportMapFragment mapFragment;
-    Bundle startPosition, endPosition;
+    Bundle endPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +72,6 @@ public class RunningRecord extends AppCompatActivity implements OnMapReadyCallba
         time = intent.getIntExtra(RUN_TIME, 600);
         String date = intent.getStringExtra(RUN_DATE);
         calories = intent.getIntExtra(RUN_CALORIES, -1);
-        startPosition = intent.getBundleExtra(RUN_START);
         endPosition = intent.getBundleExtra(RUN_END);
 
         editDistance.setText(Float.toString(distance));
@@ -116,22 +114,16 @@ public class RunningRecord extends AppCompatActivity implements OnMapReadyCallba
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         LatLngBounds.Builder bounds = new LatLngBounds.Builder();
-        LatLng startCoord =  null , endCoord = null;
+        LatLng endCoord = null;
         Boolean emptyMap = true;
 
-        //Add running start position to the map
-        if(startPosition != null) {
-            startCoord = new LatLng(startPosition.getDouble("startLat"), startPosition.getDouble("startLng"));
-            mMap.addMarker(new MarkerOptions().position(startCoord).title("A"));
-            bounds.include(startCoord);
-            emptyMap = false;
-        }
         //And running end position to the map
         if(endPosition != null){
             endCoord = new LatLng(endPosition.getDouble("endLat"), endPosition.getDouble("endLng"));
             mMap.addMarker(new MarkerOptions().position(endCoord).title("B")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             bounds.include(endCoord);
+            emptyMap = false;
         }
         //auto-zoom and auto-center map where markers are located
         if(!emptyMap) {

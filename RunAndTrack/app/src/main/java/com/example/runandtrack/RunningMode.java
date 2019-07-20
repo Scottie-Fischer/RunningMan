@@ -106,24 +106,15 @@ public class RunningMode extends AppCompatActivity implements OnMapReadyCallback
         Location startLocation = null;
         mMap = googleMap;
 
-        //Place a red marker on starting point
+        //Get current location
         if ((granted || checkPermission()) && !running) {
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,listener);
-            startLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            startLatLgn = new LatLng(startLocation.getLatitude(), startLocation.getLongitude());
-
-            /*if(startMarker != null){
-                startMarker.remove();
-            }*/
-
-            mMap.addMarker(new MarkerOptions().position(startLatLgn).title("A"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLatLgn, 16));
-            lm.removeUpdates(listener);
+            mMap.setMyLocationEnabled(true);
         }
     }
 
     //Start the timer when the Start button is clicked 
     public void onClickStart(View view){
+        mMap.setMyLocationEnabled(false);
         running = true;
         StartAndPause.setText("Pause");
         if (granted || checkPermission()) {
@@ -157,10 +148,7 @@ public class RunningMode extends AppCompatActivity implements OnMapReadyCallback
         secondIntent.putExtra(RunningRecord.RUN_DISTANCE, totalDistanceValue);
         secondIntent.putExtra(RunningRecord.RUN_DATE,date.toString());
 
-        //Pass start and end coordinates to Running Record page
-        startPosition.putDouble("startLat", startLatLgn.latitude);
-        startPosition.putDouble("startLng", startLatLgn.longitude);
-        secondIntent.putExtra(RunningRecord.RUN_START, startPosition);
+        //Pass current location coordinates to Running Record page
         if(endLatLgn != null) {
             endPosition.putDouble("endLat", endLatLgn.latitude);
             endPosition.putDouble("endLng", endLatLgn.longitude);
@@ -269,7 +257,7 @@ public class RunningMode extends AppCompatActivity implements OnMapReadyCallback
                 endMarker.remove();
             };
             endLatLgn = new LatLng(location.getLatitude(), location.getLongitude());
-            endMarker = mMap.addMarker(new MarkerOptions().position(endLatLgn).title("B")
+            endMarker = mMap.addMarker(new MarkerOptions().position(endLatLgn).title("Current Location")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(endLatLgn, 16));
         }
