@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -54,9 +53,8 @@ public class RunningMode extends AppCompatActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private SupportMapFragment mapFragment;
     private Marker endMarker;
-    private LatLng startLatLgn = null;
     private LatLng endLatLgn = null;
-    private Bundle startPosition = new Bundle(), endPosition =  new Bundle();
+    private Bundle endPosition =  new Bundle();
 
     View recordDelete;
 
@@ -103,7 +101,6 @@ public class RunningMode extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap){
-        Location startLocation = null;
         mMap = googleMap;
 
         //Get current location

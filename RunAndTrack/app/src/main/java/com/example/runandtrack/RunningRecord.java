@@ -2,6 +2,7 @@ package com.example.runandtrack;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -124,6 +125,10 @@ public class RunningRecord extends AppCompatActivity implements OnMapReadyCallba
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             bounds.include(endCoord);
             emptyMap = false;
+        }else{
+            //Don't show the map if there are no end coordinates
+            //This mean the user ends the run without pressing START
+            mapFragment.getView().setVisibility(View.INVISIBLE);
         }
         //auto-zoom and auto-center map where markers are located
         if(!emptyMap) {
