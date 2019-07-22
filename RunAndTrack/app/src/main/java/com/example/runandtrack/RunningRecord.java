@@ -69,7 +69,7 @@ public class RunningRecord extends AppCompatActivity implements OnMapReadyCallba
 
         //Get the running related data
         Intent intent = getIntent();
-        distance = (float)intent.getDoubleExtra(RUN_DISTANCE, 0.001f);
+        distance = intent.getFloatExtra(RUN_DISTANCE, 0.001f);
         time = intent.getIntExtra(RUN_TIME, 600);
         String date = intent.getStringExtra(RUN_DATE);
         calories = intent.getIntExtra(RUN_CALORIES, -1);
