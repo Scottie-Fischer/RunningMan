@@ -47,7 +47,7 @@ public class RunningMode extends AppCompatActivity implements OnMapReadyCallback
     private String km = " km"; //kilometers
     private DecimalFormat decimal = new DecimalFormat(decimalPoint);
     private TextView totalDistanceNew, averageSpeedNew;
-    private double totalDistanceValue, averageSpeedValue;
+    private float totalDistanceValue, averageSpeedValue;
     private String totalDistanceString, averageSpeedString;
     //Map
     private GoogleMap mMap;
