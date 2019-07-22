@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class RunDatabase extends SQLiteOpenHelper {
@@ -83,7 +81,7 @@ public class RunDatabase extends SQLiteOpenHelper {
     public ArrayList<RecordHelper> view() {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<RecordHelper> list = new ArrayList<RecordHelper>();
-        String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + COL_DATE + " DESC";
+        String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + "datetime(" + COL_DATE + ")" + " DESC";
         Log.d("RunDatabase", sql);
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor.moveToFirst()) {
