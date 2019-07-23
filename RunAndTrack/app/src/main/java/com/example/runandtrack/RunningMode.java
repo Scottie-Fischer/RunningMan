@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -138,12 +139,16 @@ public class RunningMode extends AppCompatActivity implements OnMapReadyCallback
         running = false;
 
         recordDelete.setVisibility(view.VISIBLE);
+
+        //Get the date when the run happens
         Date date = new Date();
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss zzz");
+        String newDate = newDateFormat.format(date);
 
         Intent secondIntent= new Intent(this,RunningRecord.class);
         secondIntent.putExtra(RunningRecord.RUN_TIME, seconds);
         secondIntent.putExtra(RunningRecord.RUN_DISTANCE, totalDistanceValue);
-        secondIntent.putExtra(RunningRecord.RUN_DATE,date.toString());
+        secondIntent.putExtra(RunningRecord.RUN_DATE, newDate);
 
         //Pass current location coordinates to Running Record page
         if(endLatLgn != null) {
